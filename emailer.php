@@ -2,10 +2,10 @@
 
 class emailer
 {
-	private $sender = "";
-	private $recipients = "";
-	private $subject = "";
-	private $body = "";
+	private $sender;
+	private $recipients;
+	private $subject;
+	private $body;
 	function __construct($sender)
 	{
 		$this->sender = $sender;
@@ -33,5 +33,11 @@ class emailer
 		}
 	}
 }
+$emailer = new emailer("dhruvesh_tripathi@yahoo.com"); //construcion
+$emailer->addRecipients("dhruveshgr8@gmail.com"); //accessing methods
+// and passing some data
+$emailer->setSubject("Just a Test");
+$emailer->setBody("Hi Dhruvesh, How are you?");
+$emailer->sendEmail();
 
 ?>
