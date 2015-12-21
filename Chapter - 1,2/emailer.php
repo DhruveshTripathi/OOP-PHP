@@ -2,7 +2,7 @@
 
 class emailer
 {
-	private $sender;
+	protected $sender;
 	private $recipients;
 	private $subject;
 	private $body;
@@ -33,11 +33,37 @@ class emailer
 		}
 	}
 }
+class ExtendedEmailer extends emailer
+{
+	function __construct(){}
+	public function setSender($sender)
+	{
+		$this->sender = $sender;
+	}
+}
+<?
+class HtmlEmailer extends emailer
+{
+	public function sendHTMLEmail()
+	{
+		foreach ($this->recipients as $recipient)
+		{
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From: {$this->sender}' . "\r\n";
+			$result = mail($recipient, $this->subject, $this->body,$headers);
+			if ($result) 
+				echo "HTML Mail successfully sent to{$recipient}<br/>";
+		}
+	}
+}
+?>
 $emailer = new emailer("dhruvesh_tripathi@yahoo.com"); //construcion
 $emailer->addRecipients("dhruveshgr8@gmail.com"); //accessing methods
-// and passing some data
 $emailer->setSubject("Just a Test");
 $emailer->setBody("Hi Dhruvesh, How are you?");
 $emailer->sendEmail();
-
+$hm = new HtmlEmailer();
+$hm->sendEmail();
+$hm->sendHTMLEmail();
 ?>
